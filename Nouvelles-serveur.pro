@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network webkit xml
 
 TARGET = Nouvelles-serveur
 TEMPLATE = app

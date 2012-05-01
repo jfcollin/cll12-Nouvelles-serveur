@@ -2,6 +2,9 @@
 #define NOUVELLESSERVEUR_H
 
 #include <QMainWindow>
+#include <QList>
+#include <QtWebKit>
+
 
 namespace Ui {
 class NouvellesServeur;
@@ -17,6 +20,10 @@ public:
     
 private:
     Ui::NouvellesServeur *ui;
+    int connectionId;
+    QXmlStreamReader xml;
+    QHttp http;
+
 };
 
 #endif // NOUVELLESSERVEUR_H
