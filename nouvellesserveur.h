@@ -38,7 +38,6 @@ private:
 
     QTreeWidgetItem *feed;
 
-
 };
 
 #endif // NOUVELLESSERVEUR_H

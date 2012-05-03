@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1026</width>
-    <height>863</height>
+    <width>1300</width>
+    <height>933</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>20</x>
       <y>50</y>
-      <width>981</width>
-      <height>421</height>
+      <width>1261</width>
+      <height>541</height>
      </rect>
     </property>
     <property name="url">
@@ -33,27 +33,57 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>490</y>
-      <width>981</width>
+      <y>610</y>
+      <width>1271</width>
       <height>281</height>
      </rect>
     </property>
     <property name="columnCount">
      <number>3</number>
     </property>
+    <attribute name="headerVisible">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="headerCascadingSectionResizes">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="headerDefaultSectionSize">
+     <number>400</number>
+    </attribute>
+    <attribute name="headerStretchLastSection">
+     <bool>true</bool>
+    </attribute>
     <column>
      <property name="text">
-      <string notr="true">1</string>
+      <string notr="true">Titre</string>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
     </column>
     <column>
      <property name="text">
-      <string notr="true">2</string>
+      <string notr="true">Date</string>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
     </column>
     <column>
      <property name="text">
-      <string notr="true">3</string>
+      <string notr="true">Nouvelle</string>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
     </column>
    </widget>
@@ -63,7 +93,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1026</width>
+     <width>1300</width>
      <height>25</height>
     </rect>
    </property>

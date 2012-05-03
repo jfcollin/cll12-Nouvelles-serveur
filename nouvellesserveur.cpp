@@ -5,22 +5,17 @@ NouvellesServeur::NouvellesServeur(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::NouvellesServeur)
 {
+
     connect(&http, SIGNAL(readyRead(const QHttpResponseHeader &)), this,
                SLOT(readData(const QHttpResponseHeader &)));
 
     ui->setupUi(this);
-
-    //ui->TW->setColumnHidden(1, true);
-    //ui->TW->setColumnHidden(2, true);
+    //Lien du signal RSS
     QUrl url("http://affaires.lapresse.ca/rss/2343.xml");
 
-
+    //Connection au signal RSS
     http.setHost(url.host());
     connectionId = http.get(url.path());
-
-
-    //ui->WV->load(QUrl(url));
-    //ui->WV->show();
 
 }
 
@@ -31,6 +26,7 @@ NouvellesServeur::~NouvellesServeur()
 
 void NouvellesServeur::readData(const QHttpResponseHeader &resp)
  {
+    //Lis le contenu du signal RSS
      if (resp.statusCode() != 200)
          http.abort();
      else {
@@ -39,7 +35,7 @@ void NouvellesServeur::readData(const QHttpResponseHeader &resp)
      }
 
  }
-
+//Addition et affichage dans l'arbre des nouvelles
 void NouvellesServeur::parseXml()
  {
 
@@ -90,17 +86,19 @@ void NouvellesServeur::parseXml()
          qWarning() << "XML ERROR:" << xml.lineNumber() << ": " << xml.errorString();
          http.abort();
      }
+     //Ouvre le premier élément du QTreeWidget
+     ui->TW->expandItem(ui->TW->itemAt(0,0));
+     //Affiche la première nouvelle
+     ui->WV->load(QUrl(ui->TW->itemAt(100,25)->text(2)));
+     //Redimensionne les 2 premières colonnes
+     ui->TW->resizeColumnToContents(0);
+     ui->TW->resizeColumnToContents(1);
  }
-
-/*void NouvellesServeur::itemActivated(QTreeWidgetItem * item)
-{
-    ui->WV->load(QUrl(item->text(2)));
-    ui->WV->show();
-
-}*/
-
+//Lorsqu'une nouvelle est sélectionnée elle est affichée
 void NouvellesServeur::on_TW_itemActivated(QTreeWidgetItem *item)
 {
     ui->WV->load(QUrl(item->text(2)));
     ui->WV->show();
 }
+
+
