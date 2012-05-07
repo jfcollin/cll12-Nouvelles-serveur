@@ -88,8 +88,11 @@ void NouvellesServeur::parseXml()
      }
      //Ouvre le premier élément du QTreeWidget
      ui->TW->expandItem(ui->TW->itemAt(0,0));
+
      //Affiche la première nouvelle
-     ui->WV->load(QUrl(ui->TW->itemAt(100,25)->text(2)));
+     //À voir ......
+     //ui->WV->load(QUrl(ui->TW->itemAt(100,25)->text(2)));
+
      //Redimensionne les 2 premières colonnes
      ui->TW->resizeColumnToContents(0);
      ui->TW->resizeColumnToContents(1);
@@ -101,4 +104,12 @@ void NouvellesServeur::on_TW_itemActivated(QTreeWidgetItem *item)
     ui->WV->show();
 }
 
+
+
+void NouvellesServeur::on_Demarer_clicked()
+{
+    socketServeur = new tcpserveur();
+    if(!socketServeur->listen(QHostAddress::Any,60123))
+        QMessageBox::information(this, "Erreur", "Erreur listen");
+}
 

@@ -5,6 +5,8 @@
 #include <QList>
 #include <QtWebKit>
 #include <QTreeWidgetItem>
+#include "tcpserveur.h"
+#include <QMessageBox>
 
 
 namespace Ui {
@@ -26,6 +28,8 @@ public slots :
 private slots:
     void on_TW_itemActivated(QTreeWidgetItem *item);
 
+    void on_Demarer_clicked();
+
 private:
     Ui::NouvellesServeur *ui;
     int connectionId;
@@ -37,6 +41,7 @@ private:
     QString dateString;
 
     QTreeWidgetItem *feed;
+    tcpserveur *socketServeur;
 
 };
 

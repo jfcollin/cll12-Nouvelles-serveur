@@ -11,8 +11,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        nouvellesserveur.cpp
+        nouvellesserveur.cpp \
+    tcpserveur.cpp \
+    threadserveur.cpp
 
-HEADERS  += nouvellesserveur.h
+HEADERS  += nouvellesserveur.h \
+    tcpserveur.h \
+    threadserveur.h
 
 FORMS    += nouvellesserveur.ui
