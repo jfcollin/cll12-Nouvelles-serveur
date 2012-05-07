@@ -9,23 +9,23 @@ ThreadServeur::ThreadServeur(QObject *parent, int socketDescriptor) :
     m_socketDescriptor = socketDescriptor;
     TimerHeure = new QTimer(this);
     connect(TimerHeure, SIGNAL(timeout()), this, SLOT(Gestion_TimerHeure()));
-    //TimerCouleur = new QTimer(this);
-    //connect(TimerCouleur, SIGNAL(timeout()), this, SLOT(Gestion_TimerCouleur()));
 
 }
 void ThreadServeur::run()
 {
     socket.setSocketDescriptor(m_socketDescriptor);
     TimerHeure->start(1000);
-    //TimerCouleur->start(1333);
     Compteur=0;
+    Rouge =0;
+    Bleu =0;
+    Vert= 0;
     while (1);
 
 }
 //Envoie de l'heure à chaque seconde
 void ThreadServeur::Gestion_TimerHeure()
 {
-    /*
+
     QTime t_Heure = QTime::currentTime();
     QString Heure = "h" + t_Heure.toString("hh:mm:ss");
     QByteArray Trame;
@@ -36,7 +36,7 @@ void ThreadServeur::Gestion_TimerHeure()
         Trame += Heure[i].toAscii();
     }
 
-    if (Compteur==0)
+    /*if (Compteur==0)
     {
         socket.write(Trame);
     }
@@ -45,81 +45,37 @@ void ThreadServeur::Gestion_TimerHeure()
         socket.waitForReadyRead(500);
         socket.write(Trame);
 
-    }
-    */
+    }*/
 
 
     char Couleur = 'c';
-    QByteArray TrameCouleur;
-    Rouge =0;
-    Bleu =0;
-    Vert= 0;
+    //QByteArray TrameCouleur;
 
-    if (Rouge <255 && Rouge!=0 && Bleu ==255 && Vert == 255)
-        Rouge -=1;
+
+    if (Rouge <=255 && Rouge!=0 && Bleu ==255 && Vert == 255)
+        Rouge -=15;
         else if (Rouge ==0 && Bleu!=0 && Bleu <=255 && Vert == 255)
-            Bleu -=1;
+            Bleu -=15;
             else if (Rouge ==0 && Bleu==0 && Vert !=0 && Vert <= 255)
-                Vert-=1;
+                Vert-=15;
                 else if (Rouge < 255)
-                    Rouge+=1;
+                    Rouge+=15;
                     else if(Bleu < 255)
-                        Bleu+=1;
+                        Bleu+=15;
                         else if (Vert <255)
-                            Vert+=1;
+                            Vert+=15;
     char c;
-    TrameCouleur +=Couleur;
+    Trame +=Couleur;
     c = Rouge;
-    TrameCouleur += c;
+    Trame += c;
     c = Vert;
-    TrameCouleur += c;
+    Trame += c;
     c = Bleu;
-    TrameCouleur += c;
-
-    if (Compteur==0)
-    {
-        socket.write(TrameCouleur);
-    }
-    else
-    {
-        socket.waitForReadyRead(500);
-        socket.write(TrameCouleur);
-    }
+    Trame += c;
 
 
+    socket.write(Trame);
     ++Compteur;
 
 
 }
-//Envoie d'une couleur à chaque 1.333 seconde
-/*
-void ThreadServeur::Gestion_TimerCouleur()
-{
-    QString Couleur = "c";
-    QByteArray Trame = Couleur.toAscii();
-    QByteArray BaReception;
-    Rouge =0;
-    Bleu =0;
-    Vert= 0;
-
-    if (Rouge <255 && Rouge!=0 && Bleu ==255 && Vert == 255)
-        Rouge -=3;
-        else if (Rouge ==0 && Bleu!=0 && Bleu <=255 && Vert == 255)
-            Bleu -=3;
-            else if (Rouge ==0 && Bleu==0 && Vert !=0 && Vert <= 255)
-                Vert-=3;
-                else if (Rouge < 255)
-                    Rouge+=3;
-                    else if(Bleu < 255)
-                        Bleu+=3;
-                        else if (Vert <255)
-                            Vert+=3;
-    Trame += Rouge;
-    Trame += Vert;
-    Trame += Bleu;
-
-    socket.waitForReadyRead(1000);
-    BaReception.append(socket.bytesAvailable());
-    if (BaReception.left(1)=="c")
-        socket.write(Trame);
-}*/

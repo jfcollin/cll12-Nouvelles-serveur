@@ -17,11 +17,10 @@ signals:
     
 public slots:
     void Gestion_TimerHeure();
-    //void Gestion_TimerCouleur();
+
 private:
     int m_socketDescriptor;
     QTimer *TimerHeure;
-    //QTimer *TimerCouleur;
     QTcpSocket socket;
     int Rouge;
     int Bleu;
