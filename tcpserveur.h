@@ -2,6 +2,7 @@
 #define TCPSERVEUR_H
 
 #include <QTcpServer>
+#include <QTreeWidget>
 
 class tcpserveur : public QTcpServer
 {
@@ -13,6 +14,7 @@ signals:
     
 public slots:
     void incomingConnection(int socketDescriptor);
+
     
 };
 

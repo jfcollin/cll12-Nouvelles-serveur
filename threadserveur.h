@@ -26,7 +26,7 @@ private:
     int Bleu;
     int Vert;
     int Compteur;
-
+    QString Adresse[3];
 };
 
 #endif // THREADSERVEUR_H

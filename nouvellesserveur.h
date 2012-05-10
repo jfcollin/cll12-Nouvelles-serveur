@@ -7,6 +7,7 @@
 #include <QTreeWidgetItem>
 #include "tcpserveur.h"
 #include <QMessageBox>
+#include <QTreeWidget>
 
 
 namespace Ui {
@@ -29,6 +30,8 @@ private slots:
     void on_TW_itemActivated(QTreeWidgetItem *item);
 
     void on_Demarer_clicked();
+signals:
+
 
 private:
     Ui::NouvellesServeur *ui;

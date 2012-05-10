@@ -91,7 +91,6 @@ void NouvellesServeur::parseXml()
 
      //Affiche la première nouvelle
      //À voir ......
-     //ui->WV->load(QUrl(ui->TW->itemAt(100,25)->text(2)));
 
      //Redimensionne les 2 premières colonnes
      ui->TW->resizeColumnToContents(0);
@@ -111,5 +110,6 @@ void NouvellesServeur::on_Demarer_clicked()
     socketServeur = new tcpserveur();
     if(!socketServeur->listen(QHostAddress::Any,60123))
         QMessageBox::information(this, "Erreur", "Erreur listen");
+
 }
 
