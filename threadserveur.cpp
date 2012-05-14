@@ -6,14 +6,14 @@
 ThreadServeur::ThreadServeur(QObject *parent, int socketDescriptor) :
     QThread(parent)
 {
-    Adresse[0] = "http://www.lapresse.ca/rss/178.xml"; //Actualité
-    Adresse[1] = "http://www.lapresse.ca/rss/241.xml"; //Environement
-    Adresse[2] = "http://www.lapresse.ca/rss/242.xml"; //Voyage
-    Adresse[3] = "http://www.lapresse.ca/rss/279.xml"; //Insolite
-    Adresse[4] = "http://www.lapresse.ca/rss/229.xml"; //Sports
-    Adresse[5] = "http://www.lapresse.ca/rss/940.xml"; //rima elkouri
-    Adresse[6] = "http://www.lapresse.ca/rss/863.xml"; //Europe
-    Adresse[7] = "http://www.lapresse.ca/rss/338.xml"; //Bruno Blanchet
+    Adresse[0] = "http://rss.lapresse.ca/178.xml"; //Actualité
+    Adresse[1] = "http://rss.lapresse.ca/241.xml"; //Environement
+    Adresse[2] = "http://rss.lapresse.ca/242.xml"; //Voyage
+    Adresse[3] = "http://rss.lapresse.ca/279.xml"; //Insolite
+    Adresse[4] = "http://rss.lapresse.ca/229.xml"; //Sports
+    Adresse[5] = "http://rss.lapresse.ca/940.xml"; //rima elkouri
+    Adresse[6] = "http://rss.lapresse.ca/863.xml"; //Europe
+    Adresse[7] = "http://rss.lapresse.ca/338.xml"; //Bruno Blanchet
 
     m_socketDescriptor = socketDescriptor;
     TimerHeure = new QTimer(this);
@@ -23,37 +23,36 @@ ThreadServeur::ThreadServeur(QObject *parent, int socketDescriptor) :
 void ThreadServeur::run()
 {
     QByteArray baReception;
-    QByteArray Trame;
-    QString Test;
+    QString Lien;
     int i;
     socket.setSocketDescriptor(m_socketDescriptor);
-    //Envoie du lien RSS désiré
-    socket.waitForReadyRead();
-    baReception = socket.read(socket.bytesAvailable());
-    i = baReception.toInt();
-    Test = Adresse[i];
-    Trame = "n";
-    Trame += Test;
-    socket.write(Trame);
-
     TimerHeure->start(1000);
 
-    Compteur=0;
     Rouge =0;
     Bleu =0;
     Vert= 0;
 
+    //Envoie le lien rss
     do
     {
         socket.waitForReadyRead();
         baReception = socket.read(socket.bytesAvailable());
-        i = baReception.toInt();
-        Test = Adresse[i];
-        Trame = "n";
-        Trame += Test;
-        socket.write(Trame);
+        i = baReception[0]-48;
+        if (i>=0 && i <=7)
+        {
+            Lien = Adresse[i];
+            Trame = "n";
+            Trame += Lien;
+            socket.write(Trame);
+            socket.waitForReadyRead();
+            baReception = socket.read(socket.bytesAvailable());
+        }
 
-
+        if (EnvoyerHeure)
+        {
+            socket.write(m_TrameHeure);
+            EnvoyerHeure = false;
+        }
 
     }
     while (1);
@@ -66,11 +65,11 @@ void ThreadServeur::Gestion_TimerHeure()
 
     QTime t_Heure = QTime::currentTime();
     QString Heure = "h" + t_Heure.toString("hh:mm:ss");
-    QByteArray Trame;
+    QByteArray TrameHeure = "";
 
     for (int i(0); i < Heure.length(); ++i)
     {
-        Trame += Heure[i].toAscii();
+        TrameHeure += Heure[i].toAscii();
     }
 
 
@@ -79,29 +78,26 @@ void ThreadServeur::Gestion_TimerHeure()
 
 
     if (Rouge <=255 && Rouge!=0 && Bleu ==255 && Vert == 255)
-        Rouge -=15;
+        Rouge -=5;
         else if (Rouge ==0 && Bleu!=0 && Bleu <=255 && Vert == 255)
-            Bleu -=15;
+            Bleu -=5;
             else if (Rouge ==0 && Bleu==0 && Vert !=0 && Vert <= 255)
-                Vert-=15;
+                Vert-=5;
                 else if (Rouge < 255)
-                    Rouge+=15;
+                    Rouge+=5;
                     else if(Bleu < 255)
-                        Bleu+=15;
+                        Bleu+=5;
                         else if (Vert <255)
-                            Vert+=15;
+                            Vert+=5;
     char c;
-    Trame +=Couleur;
+    TrameHeure +=Couleur;
     c = Rouge;
-    Trame += c;
+    TrameHeure += c;
     c = Vert;
-    Trame += c;
+    TrameHeure += c;
     c = Bleu;
-    Trame += c;
-
-
-    socket.write(Trame);
-    ++Compteur;
-
+    TrameHeure += c;
+    m_TrameHeure = TrameHeure;
+    EnvoyerHeure = true;
 
 }

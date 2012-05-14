@@ -25,8 +25,10 @@ private:
     int Rouge;
     int Bleu;
     int Vert;
-    int Compteur;
-    QString Adresse[3];
+    QString Adresse[8];
+    bool EnvoyerHeure;
+    QByteArray Trame;
+    QByteArray m_TrameHeure;
 };
 
 #endif // THREADSERVEUR_H
